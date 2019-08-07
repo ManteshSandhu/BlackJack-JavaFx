@@ -143,7 +143,14 @@ public class BlackJack extends Application {
                 public void handle(ActionEvent event)
                 {
                     deal = Integer.parseInt(tf.getText());
-                    newDeal();
+                    String tf1 = tf.getText();
+                    boolean x = newDeal(tf1);
+                    if(x)
+                    {
+                        l4.setText("The deal is : "+tf1);
+                    }
+                    else
+                        l4.setText("check lesser amount");
                 }
             });
             Scene scene = new Scene(root, 700, 500);
@@ -206,12 +213,13 @@ public class BlackJack extends Application {
         }
         return (sum2-sum1);
     }
-    public void newDeal()
+    public static boolean newDeal(String tf1)
     {
-        if(Integer.parseInt(tf.getText())<=maxAmount)
-        l4.setText("the bet is "+tf.getText());
+        if(Integer.parseInt(tf1)<=maxAmount){
+        return true;
+    }
         else {
-            l4.setText("choose lesser amount");
+                return false;
            
         }
     }
