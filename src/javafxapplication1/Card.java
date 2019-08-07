@@ -8,19 +8,10 @@ public class Card {
 		this.suit = suit; 
 		this.rank = rank;
 	}
-	
-	public String getFullName(){
-		if (rank == 11){
-			return "Jack of " + suit;
-		}
-		if (rank == 12){
-			return "Queen of " + suit;
-		}
-		if (rank == 13)
-			return "King of " + suit;
-		
-		return rank + " of " + suit;
-	}
+        public String fName(){
+            FullName fn = new FullName(suit, rank);
+            return fn.getFullName();
+        }
 	public String getImageName()
         {
             if(rank==1)
