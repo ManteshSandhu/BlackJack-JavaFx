@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -27,6 +28,8 @@ public class Main extends Application {
     FlowPane buttonPanel = new FlowPane();
     FlowPane playerPanel = new FlowPane();
     FlowPane dealerPanel = new FlowPane();
+    Label l1 = new Label("Player's side");
+    Label l2 = new Label("Dealer's side");
 
     @Override
     public void start(Stage primaryStage) {
@@ -52,6 +55,8 @@ public class Main extends Application {
             primaryStage.setTitle("Blackjack");
 
             buttonPanel.setAlignment(Pos.CENTER);
+            playerPanel.getChildren().add(l1);
+            dealerPanel.getChildren().add(l2);
             playerPanel.setAlignment(Pos.CENTER);
             dealerPanel.setAlignment(Pos.CENTER);
 
@@ -72,9 +77,9 @@ public class Main extends Application {
 
                     sum1 = calcSum();
                     if (sum1 <= 21) {
-                        System.out.println(sum1);
+                        l1.setText(sum1+"");
                     } else {
-                        System.out.println("dealer wins");
+                        l1.setText("dealer win's");
                     }
                 }
             });
@@ -84,14 +89,14 @@ public class Main extends Application {
                 {
                     dealToDealer();
                     michael = (calc1Sum());
-                    System.out.println("dealer's value "+michael);
+                    l2.setText("dealer's value "+michael);
                     if(michael<21 && michael>sum1)
                     {
-                        System.out.println("dealer wins");
+                        l2.setText("Dealer's value "+michael+" dealer wins");
                         break;
                     }
                     else if(michael>21){
-                        System.out.println("Player wins");
+                        l2.setText("Dealer's value "+michael+"Player wins");
                         break;
                             }
                 }
