@@ -10,27 +10,35 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
-public class Main extends Application {
-
-    int currentCard = 0;
-    int sum1;
-    int sum = 0;
-    ArrayList<Card> deck = new ArrayList();
-    ArrayList<Card> playerCards = new ArrayList();
-    ArrayList<Card> dealerCards = new ArrayList();
+public class BlackJack extends Application {
+    static int maxAmount=500;
+    static int currentCard = 0;
+    static int sum1;
+    static int sum = 0;
+    static int deal=0;
+    ArrayList<Card> deck = new ArrayList();//deck of cards
+    ArrayList<Card> playerCards = new ArrayList();//arraylist of player cards
+    ArrayList<Card> dealerCards = new ArrayList();//arraylist of dealer cards
+    //setting up the fx module
     BorderPane root = new BorderPane();
+    FlowPane dealPanel = new FlowPane();
+    FlowPane newPanel = new FlowPane();
     FlowPane buttonPanel = new FlowPane();
     FlowPane playerPanel = new FlowPane();
     FlowPane dealerPanel = new FlowPane();
     Label l1 = new Label("Player's side");
     Label l2 = new Label("Dealer's side");
-
+    Label l3 = new Label("set Bet");
+    Label l4 = new Label("the Bet is : ");
+    TextField tf = new TextField();
+    Button button4 = new Button("Deal?");
     @Override
     public void start(Stage primaryStage) {
 
@@ -51,7 +59,7 @@ public class Main extends Application {
                 Card c = new Card("Clubs", i + 1);
                 deck.add(c);
             }
-            Collections.shuffle(deck);
+            Collections.shuffle(deck);//shuffling the deck of cards
             primaryStage.setTitle("Blackjack");
 
             buttonPanel.setAlignment(Pos.CENTER);
@@ -60,19 +68,27 @@ public class Main extends Application {
             playerPanel.setAlignment(Pos.CENTER);
             dealerPanel.setAlignment(Pos.CENTER);
 
-            root.setBottom(buttonPanel);
+            root.setBottom(newPanel);
             root.setCenter(playerPanel);
             root.setTop(dealerPanel);
-
+            newPanel.getChildren().add(buttonPanel);
+            newPanel.getChildren().add(dealPanel);
+            
             Button btn1 = new Button("Hit");
             Button btn2 = new Button("Stand");
             Button btn3= new Button("Play Again");
             buttonPanel.getChildren().add(btn1);
             buttonPanel.getChildren().add(btn2);
             buttonPanel.getChildren().add(btn3);
+            dealPanel.getChildren().add(l3);
+            dealPanel.getChildren().add(tf);
+            dealPanel.getChildren().add(l4);
+            dealPanel.getChildren().add(button4);
+            //for the turn of player
             btn1.setOnAction(new EventHandler<ActionEvent>() {
-
+                
                 public void handle(ActionEvent event) {
+                l1.setText("Player's side");
                     dealToPlayer();
 
                     sum1 = calcSum();
@@ -80,11 +96,14 @@ public class Main extends Application {
                         l1.setText(sum1+"");
                     } else {
                         l1.setText("dealer win's");
+                        
                     }
                 }
             });
+            
             btn2.setOnAction((ActionEvent event) -> {
                 int michael =0 ;
+                l2.setText("Dealer's side");
                 while(michael>=0)
                 {
                     dealToDealer();
@@ -92,24 +111,40 @@ public class Main extends Application {
                     l2.setText("dealer's value "+michael);
                     if(michael<21 && michael>sum1)
                     {
-                        l2.setText("Dealer's value "+michael+" dealer wins");
+                        l2.setText("Dealer's value "+michael+" dealer wins ");
+                        l4.setText("Player lose : "+deal);
                         break;
                     }
                     else if(michael>21){
-                        l2.setText("Dealer's value "+michael+" Player wins");
+                        l2.setText("Dealer's value "+michael+" Player wins ");
+                        l4.setText("Player got : " + (2*deal));
                         break;
                             }
                 }
             });
+            //for the dealer
             btn3.setOnAction((ActionEvent event) -> {
                 playerPanel.getChildren().clear();
                 dealerPanel.getChildren().clear();
+                playerPanel.getChildren().add(l1);
+                dealerPanel.getChildren().add(l2);
+                tf.clear();;
                sum1=0;
                playerCards.clear();
                dealerCards.clear();
                sum1=0;
                sum=0;
+               l1.setText("player's side");
+               l2.setText("dealer's side");
+               l4.setText("the bet is");
                
+            });
+            button4.setOnAction(new EventHandler<ActionEvent>(){
+                public void handle(ActionEvent event)
+                {
+                    deal = Integer.parseInt(tf.getText());
+                    newDeal();
+                }
             });
             Scene scene = new Scene(root, 700, 500);
 //			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -120,7 +155,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-
+    
     public void dealToPlayer() {
 
 
@@ -135,7 +170,7 @@ public class Main extends Application {
         
         
     }
-
+    //for the dealer
     public void dealToDealer() {
 
 
@@ -150,7 +185,7 @@ public class Main extends Application {
 
     }
 
-
+    //to calculate the sum of player
     public int calcSum() {
         int sum = 0;
 
@@ -159,8 +194,9 @@ public class Main extends Application {
             sum += (value);
         }
         return sum;
-    }
 
+    }
+//for the sum of dealer's cards
     public int calc1Sum() {
         int sum2 = 0;
 
@@ -170,7 +206,16 @@ public class Main extends Application {
         }
         return (sum2-sum1);
     }
-
+    public void newDeal()
+    {
+        if(Integer.parseInt(tf.getText())<=maxAmount)
+        l4.setText("the bet is "+tf.getText());
+        else {
+            l4.setText("choose lesser amount");
+           
+        }
+    }
+// the main method
     public static void main(String[] args) {
         System.out.println(args);
         launch(args);

@@ -3,7 +3,7 @@ package javafxapplication1;
 public class Card {
 	String suit;
 	int rank; //1 means Ace, .. 11 means J, 12 means Q, 13 means K 
-	
+	//consturctor for card class
 	public Card(String suit, int rank){
 		this.suit = suit; 
 		this.rank = rank;
@@ -32,6 +32,7 @@ public class Card {
             }
             return ""+ rank +this.suit.charAt(0);
         }
+        //to get the value of a card
 	public int getBlackjackValue(){
 		if (rank > 10){
 			return 10;

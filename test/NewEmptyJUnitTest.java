@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import javafxapplication1.BlackJack;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -35,7 +36,11 @@ public class NewEmptyJUnitTest {
     @After
     public void tearDown() {
     }
-
+    @Test
+    public void testnewDeal(){
+        
+        
+    }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
