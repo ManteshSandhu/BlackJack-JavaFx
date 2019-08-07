@@ -96,7 +96,7 @@ public class Main extends Application {
                         break;
                     }
                     else if(michael>21){
-                        l2.setText("Dealer's value "+michael+"Player wins");
+                        l2.setText("Dealer's value "+michael+" Player wins");
                         break;
                             }
                 }
